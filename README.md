@@ -59,12 +59,7 @@ git clone [https://github.com/Simeon-Petrov/Santas-Workshop-API.git](https://git
 
 Markdown#### Step 2: Build and run the Spring Boot application:
 
-```bash
-# Build the project
-mvn clean install
 
-# Start the application
-mvn spring-boot:run```
 
 ---
 
