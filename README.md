@@ -54,7 +54,7 @@ Make sure you have the following installed on your machine:
 Build the project<br> 
 &nbsp;mvn clean install<br><br>
 start the application<br> 
-&nbsp;pmvn spring-boot:run<br>  
+&nbsp;mvn spring-boot:run<br>  
 
 #### Navigate to the project root (where `pom.xml` is located):
 cd [[[https://github.com/Simeon-Petrov/Santas-Workshop-API](https://github.com/Simeon-Petrov/Santas-Workshop-API/blob/master/pom.xml)]
