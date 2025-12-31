@@ -53,16 +53,6 @@ Make sure you have the following installed on your machine:
 
 #### Step 1: Navigate to the project root (where `pom.xml` is located):
 
-```bash
-# Clone the project from your repository
-git clone [https://github.com/Simeon-Petrov/Santas-Workshop-API.git](https://github.com/Simeon-Petrov/Santas-Workshop-API.git)
-
-Markdown#### Step 2: Build and run the Spring Boot application:
-
-
-
----
-
 ### 3. Access the Application
 
 Once the application starts (typically runs on port **8080**), open your browser or Postman and go to:
