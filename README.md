@@ -56,3 +56,46 @@ Make sure you have the following installed on your machine:
 ```bash
 # Clone the project from your repository
 git clone [https://github.com/Simeon-Petrov/Santas-Workshop-API.git](https://github.com/Simeon-Petrov/Santas-Workshop-API.git)
+
+Markdown#### Step 2: Build and run the Spring Boot application:
+
+```bash
+# Build the project
+mvn clean install
+
+# Start the application
+mvn spring-boot:run
+
+---
+
+### 3. Access the Application
+
+Once the application starts (typically runs on port **8080**), open your browser or Postman and go to:
+
+[http://localhost:8080/api](http://localhost:8080/api)
+
+---
+
+## Code Highlights
+
+| Feature | File / Location | Implementation Detail |
+|---------|-----------------|-----------------------|
+| **Status Propagation** | `DeliveryService.java` | Automatically updates all linked `Gift` entities to `DELIVERED` when the parent delivery status is updated. |
+| **Conflict Handling** | `ElfService.java` | Validates gift status before assignment, throwing `IllegalStateException` to trigger a 409 Conflict response. |
+| **Custom Deserialization** | `Status.java` | Uses `@JsonCreator` to handle case-insensitive string-to-enum conversion for API requests. |
+| **Automated ID Generation** | `All Services` | Uses `AtomicLong` to manage unique identifiers for in-memory data storage. |
+| **Filtering Logic** | `GiftService.java` | Implements Java Streams to filter gifts dynamically by status or category via request parameters. |
+
+---
+
+## API Documentation
+
+You can find detailed API request examples and test scenarios in the following file:
+
+- [Test Requests (HTTP Client)](test_requests.http)
+
+---
+
+## Author
+
+**Simeon Petrov**
