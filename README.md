@@ -64,7 +64,7 @@ Markdown#### Step 2: Build and run the Spring Boot application:
 mvn clean install
 
 # Start the application
-mvn spring-boot:run
+mvn spring-boot:run```
 
 ---
 
