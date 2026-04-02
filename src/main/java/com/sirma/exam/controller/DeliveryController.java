@@ -27,8 +27,10 @@ public class DeliveryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Delivery>> getAllDeliveries() {
-        return ResponseEntity.ok(deliveryService.getAllDeliveries());
+    public ResponseEntity<List<Delivery>> getAllDeliveries(
+            @RequestParam(required = false) DeliveryStatus status,
+            @RequestParam(required = false) String recipientName) {
+        return ResponseEntity.ok(deliveryService.getAllDeliveries(status, recipientName));
     }
 
     @PatchMapping("/{id}/status")

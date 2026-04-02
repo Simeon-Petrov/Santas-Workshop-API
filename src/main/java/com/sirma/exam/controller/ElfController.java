@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/elves")
+@RequestMapping("/api/elves")
 @RequiredArgsConstructor
 public class ElfController {
 
@@ -26,6 +26,17 @@ public class ElfController {
     @GetMapping
     public ResponseEntity<List<Elf>> getAllElves() {
         return ResponseEntity.ok(elfService.getAllElves());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Elf> getAllElvesById(@PathVariable Long id) {
+        return ResponseEntity.ok(elfService.getElfById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteElf(@PathVariable Long id) {
+        elfService.deleteElf(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{elfId}/assign/{giftId}")

@@ -1,7 +1,6 @@
 package com.sirma.exam.service;
 
 import com.sirma.exam.dto.ElfRequest;
-import com.sirma.exam.model.DeliveryStatus;
 import com.sirma.exam.model.Elf;
 import com.sirma.exam.model.Gift;
 import com.sirma.exam.model.Status;
@@ -35,16 +34,20 @@ public class ElfService {
         return elves;
     }
 
-    public Elf getElfById (Long id) {
+    public Elf getElfById(Long id) {
         return elves.stream()
                 .filter(e -> e.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Elf not found!"));
+                .orElseThrow(() -> new RuntimeException("Elf with id " + id + " not found"));
     }
 
-    public Elf assignGiftToElf (Long elfId, Long giftId) {
-        Elf elf = getElfById(elfId);
+    public void deleteElf(Long id) {
+        Elf elf = getElfById(id); // хвърля RuntimeException ако не съществува
+        elves.remove(elf);
+    }
 
+    public Elf assignGiftToElf(Long elfId, Long giftId) {
+        Elf elf = getElfById(elfId);
         Gift gift = giftService.getGiftById(giftId);
 
         if (gift.getStatus() == Status.DELIVERED) {

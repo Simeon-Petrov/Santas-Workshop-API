@@ -7,8 +7,10 @@ import com.sirma.exam.model.Status;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Service
 public class GiftService {
@@ -62,18 +64,43 @@ public class GiftService {
                 .collect(java.util.stream.Collectors.toList());
     }
 
-    public List<Gift> searchGiftsByName (String query) {
+    public List<Gift> searchGiftsByName(String query) {
         return gifts.stream()
                 .filter(gift -> gift.getName().toLowerCase().contains(query.toLowerCase()))
                 .collect(java.util.stream.Collectors.toList());
     }
 
-    public List<Gift> getGiftsFiltered(Status status, Category category, Boolean wrapped) {
-        return gifts.stream()
+    public Gift updateGift(Long id, GiftRequest request) {
+        Gift existing = getGiftById(id);
+        existing.setName(request.getName());
+        existing.setCategory(request.getCategory());
+        existing.setTargetAge(request.getTargetAge());
+        return existing;
+    }
+
+    public List<Gift> getGiftsFiltered(Status status, Category category, Boolean wrapped,
+                                       Integer page, Integer size, String sort) {
+        List<Gift> result = gifts.stream()
                 .filter(g -> status == null || g.getStatus() == status)
-                .filter(g-> category == null || g.getCategory() == category)
-                .filter(g-> wrapped == null || g.isWrapped() == wrapped)
-                .collect(java.util.stream.Collectors.toList());
+                .filter(g -> category == null || g.getCategory() == category)
+                .filter(g -> wrapped == null || g.isWrapped() == wrapped)
+                .collect(Collectors.toList());
+
+        // Сортиране
+        if ("name".equalsIgnoreCase(sort)) {
+            result.sort(Comparator.comparing(Gift::getName));
+        } else if ("createdAt".equalsIgnoreCase(sort)) {
+            result.sort(Comparator.comparing(Gift::getCreatedAt));
+        }
+
+        // Пагинация
+        if (page != null && size != null) {
+            int from = page * size;
+            int to = Math.min(from + size, result.size());
+            if (from >= result.size()) return List.of();
+            result = result.subList(from, to);
+        }
+
+        return result;
     }
 }
-

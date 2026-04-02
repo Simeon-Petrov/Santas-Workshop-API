@@ -25,7 +25,7 @@ public class StatsController {
 
         return StatsResponse.builder()
                 .giftsByStatus(giftStats)
-                .totalDeliveries(deliveryService.getAllDeliveries().size())
+                .totalDeliveries(deliveryService.getAllDeliveries(null, null).size())
                 .build();
     }
 }

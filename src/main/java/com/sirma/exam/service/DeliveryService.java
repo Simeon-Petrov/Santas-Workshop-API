@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,14 +46,22 @@ public class DeliveryService {
         return delivery;
     }
 
+    public List<Delivery> getAllDeliveries(DeliveryStatus status, String recipientName) {
+        return deliveries.stream()
+                .filter(d -> status == null || d.getDeliveryStatus() == status)
+                .filter(d -> recipientName == null ||
+                             d.getRecipientName().toLowerCase().contains(recipientName.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
     public Delivery updateDeliveryStatus(Long id, DeliveryStatus newStatus) {
         Delivery delivery = deliveries.stream()
-                .filter( d-> d.getId().equals(id))
+                .filter(d -> d.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Delivery not found!"));
 
         if (delivery.getDeliveryStatus() == DeliveryStatus.DELIVERED
-                && newStatus != DeliveryStatus.DELIVERED) {
+            && newStatus != DeliveryStatus.DELIVERED) {
             throw new IllegalStateException("Cannot change status of an already DELIVERED delivery!");
         }
 
@@ -65,9 +74,5 @@ public class DeliveryService {
         }
 
         return delivery;
-    }
-
-    public List<Delivery> getAllDeliveries () {
-        return deliveries;
     }
 }

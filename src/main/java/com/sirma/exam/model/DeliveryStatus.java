@@ -1,7 +1,6 @@
 package com.sirma.exam.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.sun.source.tree.BreakTree;
 
 public enum  DeliveryStatus {
     PLANNED, IN_TRANSIT, DELIVERED, FAILED;

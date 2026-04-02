@@ -7,7 +7,6 @@ import com.sirma.exam.model.Status;
 import com.sirma.exam.service.GiftService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +28,14 @@ public class GiftController {
 
     @GetMapping
     public ResponseEntity<List<Gift>> getAllGifts(
-            @RequestParam(required = false)Status status,
-            @RequestParam(required = false)Category category,
-            @RequestParam(required = false)Boolean wrapped) {
-                List<Gift> gifts = giftService.getGiftsFiltered(status, category, wrapped);
-                return  ResponseEntity.ok(gifts);
+            @RequestParam(required = false) Status status,
+            @RequestParam(required = false) Category category,
+            @RequestParam(required = false) Boolean wrapped,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size,
+            @RequestParam(required = false) String sort) {
+        List<Gift> gifts = giftService.getGiftsFiltered(status, category, wrapped, page, size, sort);
+        return ResponseEntity.ok(gifts);
     }
 
     @GetMapping("/search")
@@ -45,6 +47,11 @@ public class GiftController {
     @GetMapping("/{id}")
     public ResponseEntity<Gift> getGiftById(@PathVariable Long id) {
         return ResponseEntity.ok(giftService.getGiftById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Gift> updateGift(@PathVariable Long id, @Valid @RequestBody GiftRequest request) {
+        return ResponseEntity.ok(giftService.updateGift(id, request));
     }
 
     @DeleteMapping("/{id}")
